@@ -1,11 +1,15 @@
-import FormLogin from "../../Components/Login/form-login";
+import FormLogin from "../../Auth/Login/form-login";
 
 function Login() {
   return (
     <>
-      <main className="main bg-dark">
+    <div className="bodyContainer">
+       <main className="main bg-dark">
         <FormLogin />
       </main>
+    </div>
+     
+      
     </>
   );
 }

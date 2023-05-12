@@ -10,6 +10,7 @@ import Profile from "./Pages/Profile";
 function App() {
   return (
     <>
+    
       <BrowserRouter>
         <Header />
           <Routes>

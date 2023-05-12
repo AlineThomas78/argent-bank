@@ -7,6 +7,7 @@ import iconSecurity from "../../Assets/icon-security.png";
 function Home() {
   return (
     <>
+      <body>
         <Banner />
         <main>
           <section className="features">
@@ -34,8 +35,7 @@ function Home() {
             />
           </section>
         </main>
-        
-     
+      </body>
     </>
   );
 }
