@@ -1,19 +1,79 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../../Redux/authUser";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchProfile,
+  fetchProfileError,
+  fetchProfileSuccess,
+  login,
+  loginError,
+  loginSuccess,
+  logout,
+  signIn,
+} from "../../Redux/authUser";
+import { useNavigate } from "react-router-dom";
 
 function FormLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const registerHandle = (e) => {
-    e.preventDefault()
-    dispatch(login({email, password}) )
-    console.log( email, password )
+    e.preventDefault();
+    signIn({ email, password });
+    console.log(email, password);
+  };
+
+
+  async function signIn(credentials) {
+    try {
+      dispatch(login(credentials));
+      // on utilise fetch pour faire la requête
+      const response = await fetch("http://localhost:3001/api/v1/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+      const data = await response.json();
+      if (data.status !== 200) {
+        throw data;
+      }
+      dispatch(loginSuccess(data.body.token));
+      navigate("/profile");
+      getProfile(data.body.token);
+    } catch (error) {
+      dispatch(loginError(error));
+    }
   }
+
+  async function getProfile(token) {
+    try {
+      dispatch(fetchProfile());
+      // on utilise fetch pour faire la requête
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (data.status !== 200) {
+        throw data;
+      }
+      dispatch(fetchProfileSuccess(data.body));
+    } catch (error) {
+      dispatch(fetchProfileError(error));
+    }
+  }
+
   return (
     <>
       <section className="sign-in-content">
@@ -43,9 +103,10 @@ function FormLogin() {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-         
-          <button className="sign-in-button" onClick={registerHandle}>Sign In</button> 
-          
+
+          <button className="sign-in-button" onClick={registerHandle}>
+            Sign in
+          </button>
         </form>
       </section>
     </>

@@ -7,7 +7,7 @@ import iconSecurity from "../../Assets/icon-security.png";
 function Home() {
   return (
     <>
-      <body>
+      <div className="container">
         <Banner />
         <main>
           <section className="features">
@@ -25,7 +25,7 @@ function Home() {
               title="More savings means higher rates"
               text=" The more you save with us, the higher your interest rate will be!"
             />
-
+            
             <CardHome
               img={iconSecurity}
               alt="Chat Icon"
@@ -35,7 +35,7 @@ function Home() {
             />
           </section>
         </main>
-      </body>
+      </div>
     </>
   );
 }
