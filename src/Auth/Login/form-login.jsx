@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   fetchProfile,
   fetchProfileError,
@@ -9,8 +9,6 @@ import {
   login,
   loginError,
   loginSuccess,
-  logout,
-  signIn,
 } from "../../Redux/authUser";
 import { useNavigate } from "react-router-dom";
 

@@ -79,6 +79,32 @@ body {
   width: 200px;
 }
 
+.main-authenticated {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.authenticated{
+  width: 11%;
+  display: flex;
+  justify-content: space-around;
+  font-weight: bold;
+}
+
+.not-identified{
+  display: flex;
+  width: 25%;
+  justify-content: flex-end;
+}
+
+.font-not-identified{
+  display: flex;
+  justify-content: space-between;
+  width: 20%;
+  align-items: center;
+}
+
 .hero {
   background-image: url("../src/Assets/bank-tree.png");
   background-position: 0 -50px;
@@ -107,6 +133,63 @@ body {
 .hero-content .text {
   margin-bottom: 0;
   font-size: 0.9rem;
+}
+
+.edit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.containerInput {
+  width: 100%;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.editInput {
+  width: 22%;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-input {
+  width: 180px;
+  height: 30px;
+  font-size: 18px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  margin-bottom: 2em;
+  padding-left: 15px;
+  font-family: sans-serif;
+}
+
+.containerEdit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.editButton {
+  width: 15%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  width: 130px;
+  height: 30px;
+  font-size: 17px;
+  border: 2px solid #00bc77;
+  border-radius: 2px;
+  background-color: #fff;
+  color: #00bc77;
+  font-weight: 600;
+  font-family: sans-serif;
 }
 
 @media (min-width: 920px) {

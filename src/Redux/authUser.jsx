@@ -39,7 +39,7 @@ const { actions, reducer } = createSlice({
     },
 
     fetchProfileSuccess: (state, action) => {
-      state.loading = true;
+      state.loading = false;
       state.profile = action.payload;
       state.error = null;
     },
@@ -57,8 +57,30 @@ const { actions, reducer } = createSlice({
       state.credentials = null;
       state.error = null;
     },
+
+    putProfile: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
+
+    putProfileSuccess: (state, action) => {
+      state.loading = false;
+      state.profile = {
+        ...state.profile,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+      };
+      state.error = null;
+    },
+
+    putProfileError: (state, action) => {
+      state.loading = false;
+      state.profile = null
+      state.error = action.payload;
+    },
+
   },
 });
 
-export  const {login, loginSuccess, loginError, fetchProfile, fetchProfileSuccess, fetchProfileError, logout} = actions
+export  const {login, loginSuccess, loginError, fetchProfile, fetchProfileSuccess, fetchProfileError, logout, putProfile, putProfileSuccess, putProfileError} = actions
 export default reducer;
