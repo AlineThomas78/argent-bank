@@ -16,8 +16,8 @@ function Profile() {
   const token = useSelector((state) => state.user.token);
 
   const [isInEditMode, setIsInEditMode] = useState(false);
-  const [firstName, setFirstName] = useState(profile?.firstName);
-  const [lastName, setLastName] = useState(profile?.lastName);
+  const [firstName, setFirstName] = useState(profile?.firstName );
+  const [lastName, setLastName] = useState(profile?.lastName );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -113,13 +113,13 @@ function Profile() {
                       type="text"
                       onChange={(e) => setFirstName(e.target.value)}
                       className="edit-input"
-                      value={firstName || ""}
+                      placeholder={profile?.firstName}
                     />
                     <input
                       type="text"
                       onChange={(e) => setLastName(e.target.value)}
                       className="edit-input"
-                      value={lastName || ""}
+                      placeholder={profile?.lastName}
                     />
                   </div>
                 </div>
