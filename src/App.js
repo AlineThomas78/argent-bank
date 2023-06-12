@@ -10,15 +10,14 @@ import Profile from "./Pages/Profile";
 function App() {
   return (
     <>
-    
       <BrowserRouter>
         <Header />
-          <Routes>
-            <Route exact="true" path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-          <Footer />
+        <Routes>
+          <Route exact="true" path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   );

@@ -8,11 +8,12 @@ import { logout } from "../../Redux/authUser";
 
 function Header() {
   const profile = useSelector((state) => state.user.profile);
-  const isAuthenticated = useSelector((state) => state.user.token !== null);
+  const isAuthenticated = window.localStorage.getItem("loginToken");
   const dispatch = useDispatch();
 
   function SigneOut() {
     dispatch(logout());
+    window.localStorage.removeItem("loginToken");
     console.log(isAuthenticated);
   }
 
@@ -30,19 +31,22 @@ function Header() {
         <div className="main-authenticated">
           {isAuthenticated ? (
             <div className="authenticated">
-              <FontAwesomeIcon icon={faCircleUser} className="" />
-              {profile?.firstName || ""}
-              <FontAwesomeIcon icon={faSignOutAlt} />
+              <Link to="/profile">
+                <FontAwesomeIcon icon={faCircleUser} className="" />
+                <div className="user_name">{profile?.firstName || ""}</div>
+              </Link>
+
               <Link to="/" className="main-nav-item" onClick={SigneOut}>
-                Sign Out
+                <FontAwesomeIcon icon={faSignOutAlt} />
+                <div className="signButton">Sign Out</div>
               </Link>
             </div>
           ) : (
             <div className="not-identified">
               <div className="font-not-identified">
-                <FontAwesomeIcon icon={faCircleUser} />
                 <Link to="/login" className="main-nav-item">
-                  Sign In
+                  <FontAwesomeIcon icon={faCircleUser} />
+                  <div className="signButton">Sign In</div>
                 </Link>
               </div>
             </div>

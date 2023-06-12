@@ -1,5 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Sen&display=swap");
 
+.user_name {
+  padding-left: 5px;
+}
+
+.signButton {
+  padding-left: 5px;
+}
+
 html {
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -19,7 +27,6 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 .main {
@@ -54,6 +61,9 @@ body {
 .main-nav a {
   font-weight: bold;
   color: #2c3e50;
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .main-nav a.router-link-exact-active {
@@ -63,6 +73,7 @@ body {
 .main-nav-item {
   text-decoration: none;
   margin-right: 0.5rem;
+  padding-left: 10px;
 }
 
 .main-nav-item:hover {
@@ -85,23 +96,20 @@ body {
   justify-content: flex-end;
 }
 
-.authenticated{
-  width: 11%;
+.authenticated {
+  width: auto;
   display: flex;
   justify-content: space-around;
   font-weight: bold;
+  align-items: center;
 }
 
-.not-identified{
+.not-identified {
   display: flex;
-  width: 25%;
-  justify-content: flex-end;
 }
 
-.font-not-identified{
+.font-not-identified {
   display: flex;
-  justify-content: space-between;
-  width: 20%;
   align-items: center;
 }
 
@@ -151,8 +159,8 @@ body {
 }
 
 .editInput {
-  width: 22%;
-  height: 30px;
+  width: 24%;
+  height: auto;
   display: flex;
   justify-content: space-between;
 }
@@ -175,7 +183,7 @@ body {
 }
 
 .editButton {
-  width: 15%;
+  width: 21rem;
   display: flex;
   justify-content: space-between;
 }
@@ -192,38 +200,9 @@ body {
   font-family: sans-serif;
 }
 
-@media (min-width: 920px) {
-  .hero {
-    height: 400px;
-    background-position: 0% 33%;
-  }
-
-  .hero-content {
-    position: absolute;
-    top: 50px;
-    right: 50px;
-    width: 300px;
-    margin: 2rem;
-  }
-
-  .hero-content .subtitle {
-    font-size: 1.5rem;
-  }
-
-  .hero-content .text {
-    font-size: 1.2rem;
-  }
-}
-
 .features {
   display: flex;
   flex-direction: column;
-}
-
-@media (min-width: 920px) {
-  .features {
-    flex-direction: row;
-  }
 }
 
 .feature-icon {
@@ -368,7 +347,27 @@ body {
   color: #fff;
 }
 
-@media (min-width: 720px) {
+@media (max-width: 1023px) {
+  .main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+  }
+
+  .main-authenticated {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .font-not-identified {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+
   .account {
     flex-direction: row;
   }
@@ -379,5 +378,160 @@ body {
 
   .transaction-button {
     width: 200px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .containerInput {
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .editInput {
+    width: 28rem;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .editButton {
+    width: 19rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .main-authenticated {
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .not-identified {
+    display: flex;
+    width: auto;
+  }
+
+  .transaction-button {
+    width: 200px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .account {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    background-color: #fff;
+    width: 80%;
+    margin: 0 auto;
+    flex-direction: row;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+
+  .account-amount {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  .account-amount-description {
+    margin: 0;
+  }
+
+  .account-title {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: normal;
+  }
+
+  .account-content-wrapper {
+    width: 100%;
+    flex: 1;
+  }
+
+  .account-content-wrapper.cta {
+    flex: 0;
+  }
+}
+
+@media (min-width: 920px) {
+  .features {
+    flex-direction: row;
+  }
+
+  .hero {
+    height: 400px;
+    background-position: 0% 33%;
+  }
+
+  .hero-content .subtitle {
+    font-size: 1.5rem;
+  }
+
+  .hero-content .text {
+    font-size: 1.2rem;
+  }
+
+  .hero-content {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 300px;
+    margin: 2rem;
+  }
+}
+
+@media (max-width: 920px) {
+  .account {
+    flex-direction: column;
+  }
+
+  .main-nav a {
+    font-weight: bold;
+    color: #2c3e50;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    width: auto;
+  }
+
+  .containerInput {
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .editInput {
+    width: 18rem;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .edit-input {
+    width: 120px;
+    height: 30px;
+    font-size: 18px;
+    border: 2px solid grey;
+    border-radius: 5px;
+    margin-bottom: 2em;
+    padding-left: 15px;
+    font-family: sans-serif;
+  }
+
+  .editButton {
+    width: 17rem;
+    display: flex;
+    justify-content: space-between;
   }
 }

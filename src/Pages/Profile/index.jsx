@@ -1,21 +1,28 @@
 import { useDispatch, useSelector } from "react-redux";
 import CardProfile from "../../Components/Profile";
-import { useState } from "react";
-import { fetchProfile, putProfile, putProfileError, putProfileSuccess } from "../../Redux/authUser";
-
-
+import { useEffect, useState } from "react";
+import {
+  fetchProfile,
+  fetchProfileError,
+  fetchProfileSuccess,
+  putProfile,
+  putProfileError,
+  putProfileSuccess,
+} from "../../Redux/authUser";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const profile = useSelector((state) => state.user.profile);
   const token = useSelector((state) => state.user.token);
 
   const [isInEditMode, setIsInEditMode] = useState(false);
-  const [firstName , setFirstName] = useState(profile?.firstName || "");
-  const [lastName, setLastName] = useState(profile?.lastName || "");
+  const [firstName, setFirstName] = useState(profile?.firstName);
+  const [lastName, setLastName] = useState(profile?.lastName);
 
   const dispatch = useDispatch();
-  console.log(profile)
-  
+  const navigate = useNavigate();
+  console.log(profile);
+
   const handleEditClick = () => {
     setIsInEditMode(true);
   };
@@ -23,9 +30,32 @@ function Profile() {
   const updateProfile = (e) => {
     e.preventDefault();
     console.log(firstName, lastName);
-    updatedProfile(firstName, lastName)
-    
+    updatedProfile(firstName, lastName);
   };
+
+  async function getProfile(token) {
+    try {
+      dispatch(fetchProfile());
+      // on utilise fetch pour faire la requête
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (data.status !== 200) {
+        throw data;
+      }
+      dispatch(fetchProfileSuccess(data.body));
+    } catch (error) {
+      dispatch(fetchProfileError(error));
+    }
+  }
 
   async function updatedProfile(firstName, lastName) {
     try {
@@ -49,15 +79,22 @@ function Profile() {
       if (data.status !== 200) {
         throw data;
       }
-      dispatch(putProfileSuccess({ firstName, lastName }))
-      dispatch(fetchProfile())
-      setIsInEditMode(false); // pour sortir du mode d'édition 
-      
+      dispatch(putProfileSuccess({ firstName, lastName }));
+      dispatch(fetchProfile());
+      setIsInEditMode(false); // pour sortir du mode d'édition
     } catch (error) {
       dispatch(putProfileError(error));
-     
     }
   }
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("loginToken")
+    if (!token) {
+      navigate("/login");
+    }else {
+      getProfile(token)
+    }
+  }, []);
 
   return (
     <>
@@ -66,27 +103,41 @@ function Profile() {
           {isInEditMode ? (
             <div className="header">
               <div className="edit">
-                <h1> Welcome back <br /></h1>
+                <h1>
+                  {" "}
+                  Welcome back <br />
+                </h1>
                 <div className="containerInput">
                   <div className="editInput">
                     <input
                       type="text"
                       onChange={(e) => setFirstName(e.target.value)}
                       className="edit-input"
-                      placeholder={profile?.firstName || ""}
+                      value={firstName || ""}
                     />
                     <input
                       type="text"
                       onChange={(e) => setLastName(e.target.value)}
                       className="edit-input"
-                      placeholder={profile?.lastName || ""}
+                      value={lastName || ""}
                     />
                   </div>
                 </div>
                 <div className="containerEdit">
                   <div className="editButton">
-                    <button type="submit" onClick={updateProfile} className="btn">Save</button>
-                    <button className="btn" onClick={ () => setIsInEditMode(false) }>Cancel</button>
+                    <button
+                      type="submit"
+                      onClick={updateProfile}
+                      className="btn"
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="btn"
+                      onClick={() => setIsInEditMode(false)}
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
               </div>

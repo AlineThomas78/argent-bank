@@ -1,15 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import {
-  fetchProfile,
-  fetchProfileError,
-  fetchProfileSuccess,
-  login,
-  loginError,
-  loginSuccess,
-} from "../../Redux/authUser";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login, loginError, loginSuccess } from "../../Redux/authUser";
 import { useNavigate } from "react-router-dom";
 
 function FormLogin() {
@@ -18,12 +11,19 @@ function FormLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const error = useSelector((state) => state.user.error);
+
   const registerHandle = (e) => {
     e.preventDefault();
     signIn({ email, password });
     console.log(email, password);
   };
 
+  useEffect(() => {
+    if (window.localStorage.getItem("loginToken")) {
+      navigate("/profile");
+    }
+  });
 
   async function signIn(credentials) {
     try {
@@ -41,34 +41,10 @@ function FormLogin() {
         throw data;
       }
       dispatch(loginSuccess(data.body.token));
+      window.localStorage.setItem("loginToken", data.body.token);
       navigate("/profile");
-      getProfile(data.body.token);
     } catch (error) {
       dispatch(loginError(error));
-    }
-  }
-
-  async function getProfile(token) {
-    try {
-      dispatch(fetchProfile());
-      // on utilise fetch pour faire la requête
-      const response = await fetch(
-        "http://localhost:3001/api/v1/user/profile",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      if (data.status !== 200) {
-        throw data;
-      }
-      dispatch(fetchProfileSuccess(data.body));
-    } catch (error) {
-      dispatch(fetchProfileError(error));
     }
   }
 
@@ -101,6 +77,11 @@ function FormLogin() {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
+          {error ? (
+            <div className="alert">
+              <span>Incorrect credentials !</span>
+            </div>
+          ) : null }
 
           <button className="sign-in-button" onClick={registerHandle}>
             Sign in
